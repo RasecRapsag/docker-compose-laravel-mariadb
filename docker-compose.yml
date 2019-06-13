@@ -23,6 +23,7 @@ services:
       - ${APP_DIR}:/var/www/html
     networks:
       - frontend
+      - backend
   db:
     image: mariadb:${MARIADB_VERSION}
     container_name: ${MARIADB_NAME}
@@ -49,6 +50,13 @@ services:
       PMA_PASSWORD: ${MARIADB_PASSWORD}
     networks:
       - backend
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - 8025:8025
+    networks:
+      - backend
   console:
     build:
       context: ${DOCKER_ETC}
@@ -64,7 +72,6 @@ services:
       - ${APP_DIR}:/code
       - ${APP_USER_HOME}:/home/${APP_USER}
     networks:
-      - frontend
       - backend
     user: ${APP_USER}
     stdin_open: true
