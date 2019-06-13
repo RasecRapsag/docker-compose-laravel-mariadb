@@ -1,0 +1,28 @@
+#!/bin/sh
+
+D=''
+U='-uroot'
+P='-p'
+
+if [ -e '.env' ]; then
+
+    ## DATABASE
+    DB=$(grep DB_DATABASE .env | cut -d '=' -f2)
+    if [ ! -z $DB ]; then
+        D=-D${DB}
+    fi
+
+    ## USERNAME
+    USER=$(grep DB_USERNAME .env | cut -d '=' -f2)
+    if [ ! -z $USER ]; then
+        U=-u${USER}
+    fi
+
+    ## PASSWORD
+    PW=$(grep DB_PASSWORD .env | cut -d '=' -f2)
+    if [ ! -z $PW ]; then
+        P=-p${PW}
+    fi
+fi
+
+mysql -h db ${D} ${U} ${P}

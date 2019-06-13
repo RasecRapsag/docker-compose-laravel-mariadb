@@ -1,0 +1,11 @@
+FROM php:7.3-fpm
+
+Maintainer Cesar Gaspar <rasec.rapsag@gmail.com>
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		libpng-dev libjpeg-dev libfreetype6-dev && \
+	docker-php-ext-configure gd \
+		--with-freetype-dir=/usr/include/ \
+		--with-jpeg-dir=/usr/include/ && \
+    docker-php-ext-install gd pdo_mysql && \
+	apt-get clean
