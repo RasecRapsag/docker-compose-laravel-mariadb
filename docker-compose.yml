@@ -1,0 +1,79 @@
+version: '3.7'
+
+services:
+  web:
+    image: nginx:${NGINX_VERSION}
+    container_name: ${NGINX_NAME}
+    depends_on:
+      - php
+    ports:
+      - "${NGINX_PORT}:80"
+    volumes:
+      - ${APP_DIR}:/var/www/html
+      - ${NGINX_CONF}:/etc/nginx/conf.d/default.conf
+    networks:
+      - frontend
+  php:
+    build:
+      context: ${DOCKER_ETC}
+      dockerfile: ${DOCKER_PHP}
+    image: php-mariadb
+    container_name: php
+    volumes:
+      - ${APP_DIR}:/var/www/html
+    networks:
+      - frontend
+  db:
+    image: mariadb:${MARIADB_VERSION}
+    container_name: ${MARIADB_NAME}
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MARIADB_PASSWORD}
+      MYSQL_USER: ${MARIADB_USER}
+      MYSQL_PASSWORD: ${MARIADB_PASSWORD}
+      MYSQL_DATABASE: ${MARIADB_DB}
+    volumes:
+      - ${MARIADB_DATA}:/var/lib/mysql
+    networks:
+      - backend
+  pma:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: myadmin
+    depends_on:
+      - db
+    ports:
+      - 8080:80
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: ${MARIADB_NAME}
+      PMA_USER: ${MARIADB_USER}
+      PMA_PASSWORD: ${MARIADB_PASSWORD}
+    networks:
+      - backend
+  console:
+    build:
+      context: ${DOCKER_ETC}
+      dockerfile: ${DOCKER_CONSOLE}
+      args:
+        APP_USER: ${APP_USER}
+    image: console
+    container_name: console
+    depends_on:
+      - web
+      - db
+    volumes:
+      - ${APP_DIR}:/code
+      - ${APP_USER_HOME}:/home/${APP_USER}
+    networks:
+      - frontend
+      - backend
+    user: ${APP_USER}
+    stdin_open: true
+    tty: true
+
+networks:
+  frontend:
+    name: frontend_network
+    driver: bridge
+  backend:
+    name: backend_network
+    driver: bridge

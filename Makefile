@@ -1,5 +1,10 @@
+include .env
+export APP=$(shell grep APP_DIR .env | cut -d '=' -f2)
+export HOME=$(shell grep APP_USER_HOME .env | cut -d '=' -f2)
+
 up:
 	clear
+	@mkdir -p ${APP} ${HOME}
 	@docker-compose up -d
 
 down:
