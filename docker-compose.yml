@@ -63,6 +63,7 @@ services:
       dockerfile: ${DOCKER_CONSOLE}
       args:
         APP_USER: ${APP_USER}
+        APP_TIMEZONE: ${APP_TIMEZONE}
     image: console
     container_name: console
     depends_on:
