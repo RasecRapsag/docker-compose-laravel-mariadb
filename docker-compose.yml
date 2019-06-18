@@ -37,8 +37,8 @@ services:
     networks:
       - backend
   pma:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: myadmin
+    image: phpmyadmin/phpmyadmin:${MYADMIN_VERSION}
+    container_name: ${MYADMIN_NAME}
     depends_on:
       - db
     ports:
@@ -46,7 +46,7 @@ services:
     environment:
       PMA_ARBITRARY: 1
       PMA_HOST: ${MARIADB_NAME}
-      PMA_USER: ${MARIADB_USER}
+      PMA_USER: ${MYADMIN_USER}
       PMA_PASSWORD: ${MARIADB_PASSWORD}
     networks:
       - backend
