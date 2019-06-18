@@ -23,6 +23,10 @@ logs:
 	clear
 	@docker-compose logs -f
 
+mysql:
+	clear
+	@docker exec -ti console mysql-cli
+
 console:
 	clear
 	@docker exec -ti console /bin/sh
