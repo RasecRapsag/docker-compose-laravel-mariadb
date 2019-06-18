@@ -11,15 +11,16 @@ RUN apk --update add tzdata curl git openssh-client mariadb-client npm \
 	php7-pdo php7-zip php7-simplexml php7-fileinfo php7-bcmath && \
 	rm /var/cache/apk/* && \
 	curl -sS https://getcomposer.org/installer | \
-	php -- --install-dir=/usr/bin --filename=composer
+	php -- --install-dir=/usr/bin --filename=composer && \
+	cp /usr/share/zoneinfo/${APP_TIMEZONE} /etc/localtime && \
+	echo "${APP_TIMEZONE}" > /etc/timezone && \
+	rm -rf /usr/share/zoneinfo/*
 
 COPY ./bin/* /usr/local/bin/
 
 RUN mkdir -p /code && \
 	adduser -D ${APP_USER} && \
-	chmod 755 /usr/local/bin/* && \
-	cp /usr/share/zoneinfo/${APP_TIMEZONE} /etc/localtime && \
-	echo "${APP_TIMEZONE}" > /etc/timezone
+	chmod 755 /usr/local/bin/*
 
 WORKDIR /code
 
