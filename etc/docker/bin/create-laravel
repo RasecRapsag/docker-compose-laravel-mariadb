@@ -5,3 +5,9 @@ echo 'Aguarde a criação dos arquivos do projeto...'
 # Cria o projeto no diretório atual
 cd /code
 composer create-project --prefer-dist laravel/laravel .
+
+# Configurando timezone no Laravel
+if [ $? == 0 ]; then
+    sed -i "s/'timezone'.*/'timezone' => env('APP_TIMEZONE', 'UTC'),/g" config/app.php
+    sed -i "/^APP_URL=.*/a APP_TIMEZONE=${APP_TIMEZONE}" .env
+fi

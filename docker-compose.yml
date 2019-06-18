@@ -72,6 +72,8 @@ services:
     volumes:
       - ${APP_DIR}:/code
       - ${APP_USER_HOME}:/home/${APP_USER}
+    environment:
+      - APP_TIMEZONE=${APP_TIMEZONE}
     networks:
       - backend
     user: ${APP_USER}
