@@ -1,0 +1,22 @@
+export LANG=pt_BR.UTF-8
+export TERM="xterm-256color"
+export ZSH="/tmp/oh-my-zsh"
+
+ZSH_THEME="powerlevel9k/powerlevel9k"
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(dir_writable dir vcs)
+#POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=()
+POWERLEVEL9K_PROMPT_ON_NEWLINE=true
+POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
+POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S - %d/%m/%Y}"
+POWERLEVEL9K_SHOW_CHANGESET=true
+POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{white}\u256D\u2500%f"
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{white}\u2570\u2500%f%K{yellow}%F{234} $%K{234}%F{yellow}\uE0B0%F{white} "
+
+# Plugins
+plugins=(git composer laravel5)
+
+source $ZSH/oh-my-zsh.sh
+
+# Alias para rodar PHPUnit
+alias pu="/code/vendor/bin/phpunit"
+alias pf="/code/vendor/bin/phpunit --filer "

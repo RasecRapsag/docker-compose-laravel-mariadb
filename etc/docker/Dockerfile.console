@@ -5,7 +5,7 @@ Maintainer Cesar Gaspar <rasec.rapsag@gmail.com>
 ARG APP_USER
 ARG APP_TIMEZONE
 
-RUN apk --update add tzdata curl git openssh-client mariadb-client npm \
+RUN apk --update add zsh zsh-vcs tzdata curl git openssh-client mariadb-client npm \
 	php7 php7-curl php7-phar php7-json php7-openssl php7-xml php7-session \
 	php7-xmlwriter php7-mbstring php7-dom php7-tokenizer php7-pdo_mysql \
 	php7-pdo php7-zip php7-simplexml php7-fileinfo php7-bcmath && \
@@ -17,13 +17,15 @@ RUN apk --update add tzdata curl git openssh-client mariadb-client npm \
 	rm -rf /usr/share/zoneinfo/*
 
 COPY ./bin/* /usr/local/bin/
+COPY ./oh-my-zsh/ /tmp/oh-my-zsh/
 
 RUN mkdir -p /code && \
-	adduser -D ${APP_USER} && \
-	chmod 755 /usr/local/bin/*
+	adduser -s /bin/zsh -D ${APP_USER} && \
+	chmod 755 /usr/local/bin/* && \
+	chown -R ${APP_USER}. /tmp/oh-my-zsh/
 
 WORKDIR /code
 
-CMD ["/bin/sh"]
+CMD ["/bin/zsh"]
 
-ENTRYPOINT ["/bin/sh", "-c"]
+ENTRYPOINT ["/bin/zsh", "-c"]

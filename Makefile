@@ -5,6 +5,7 @@ export HOME=$(shell grep APP_USER_HOME .env | cut -d '=' -f2)
 up:
 	clear
 	@mkdir -p ${APP} ${HOME}
+	@cp ./etc/docker/oh-my-zsh/zshrc ${HOME}/.zshrc
 	@docker-compose up -d
 
 down:
@@ -29,4 +30,4 @@ mysql:
 
 console:
 	clear
-	@docker exec -ti console /bin/sh
+	@docker exec -ti console /bin/zsh
