@@ -10,7 +10,7 @@ POWERLEVEL9K_PROMPT_ADD_NEWLINE=true
 POWERLEVEL9K_TIME_FORMAT="%D{%H:%M:%S - %d/%m/%Y}"
 POWERLEVEL9K_SHOW_CHANGESET=true
 POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="%F{white}\u256D\u2500%f"
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{white}\u2570\u2500%f%K{yellow}%F{234} $%K{234}%F{yellow}\uE0B0%F{white} "
+POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="%F{white}\u2570\u2500%f%K{yellow}%F{black} $%K{none}%F{yellow}\uE0B0%F{white} "
 
 # Plugins
 plugins=(git composer laravel5)
